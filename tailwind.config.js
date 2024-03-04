@@ -23,14 +23,7 @@ module.exports = {
       },
       colors: {
         primary: '#ffcc00',
-        gray : {
-            main: '#1C1C28',
-            500: '#94A3B8',
-            600: '#777C94',
-          700: '#32334D',
-          800:'#28293D'
-        },
-        mainSlate: '#4A4B6D'
+        
       },
        animation: {
         'moveBounce': 'moveBounce 5s linear infinite',

@@ -6,7 +6,11 @@ const Layout = () => {
   return (
     <>
     <Header/>
+    <section className='container'>
+        <div className='border border-gray-600 rounded-xl min-h-screen'>
     <Outlet />
+        </div>
+    </section>
     </>
   )
 }
