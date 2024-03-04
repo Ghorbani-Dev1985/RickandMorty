@@ -9,21 +9,12 @@ import CharactersLoading from '../../Components/Loading/CharactersLoading'
 
 const Index = () => {
     const [characters , setCharacters] = useState([])
-    const [characterDetails , setCharacterDetails] = useState([])
+    const [selectedID , setSelectedID] = useState("")
     const [characterEpisodes , setCharacterEpisodes] = useState([])
     const [query , setQuery] = useState("")
     const [isLoading , setIsLoading] = useState(false)
-    const ShowDetailsHandler = (id) => {
-        const fetchCharacterDetails = ApiRequest(`character/${id}`)
-        .then((response) => {
-          if(response.status === 200){
-            setCharacterDetails(response.data)
-            setCharacterEpisodes(response.data.episode)
-            setIsLoading(false)
-          }else{
-            toast.error("Error- Fetch Datas")
-          }
-        })
+    const SelectedIDHandler = (id) => {
+      setSelectedID(prevID => prevID === id ? null : id)
     } 
     useEffect(() => {
       async function getCharacters (){
@@ -56,12 +47,12 @@ const Index = () => {
         <div className='col-span-12 lg:col-span-5 order-2 lg:order-1'>
           {
             isLoading ? <CharactersLoading listsToRender={20}/> 
-            : <CharacterList characters={characters} ShowDetailsHandler={ShowDetailsHandler}/>
+            : <CharacterList selectedID={selectedID} characters={characters} SelectedIDHandler={SelectedIDHandler}/>
           }
 
         </div>
         <div className='col-span-12 lg:col-span-7 order-1 lg:order-2'>
-         <CharacterDetail characterDetails={characterDetails} characterEpisodes={characterEpisodes}/>
+         <CharacterDetail selectedID={selectedID} characterEpisodes={characterEpisodes}/>
         </div>
    </div>
    </section>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 
-import { Man2Outlined, PrivacyTipOutlined, WomanOutlined } from '@mui/icons-material'
+import { GppMaybe, Man2Outlined, PrivacyTipOutlined, WomanOutlined } from '@mui/icons-material'
 
-const CharacterList = ({ShowDetailsHandler , characters}) => {
+const CharacterList = ({selectedID ,SelectedIDHandler , characters}) => {
 
   return (
 
@@ -29,8 +29,11 @@ const CharacterList = ({ShowDetailsHandler , characters}) => {
                    
                     </div>
             </div>
-                  <button onClick={() => ShowDetailsHandler(id)}>
-                    <PrivacyTipOutlined className='text-violet-500' />
+                  <button onClick={() => SelectedIDHandler(id)} className='text-violet-500'>
+                    {
+                        selectedID === id ? <GppMaybe /> : <PrivacyTipOutlined />
+                    }
+                    
                   </button>
 
         </div>    

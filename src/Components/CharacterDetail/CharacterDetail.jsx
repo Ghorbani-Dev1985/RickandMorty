@@ -1,38 +1,63 @@
 import { Man2Outlined, WomanOutlined } from "@mui/icons-material";
 import { Alert } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ApiRequest from "../../Services/Axios/Config";
+import CharacterLoading from "../Loading/CharacterLoading";
 
-const CharacterDetail = (props) => {
-  const { image, name, gender, status, species, location } =
-    props.characterDetails;
+const CharacterDetail = ({selectedID}) => {
+   const [character , setCharacter] = useState(null)
+   const [isLoading , setIsLoading] = useState(false)
+   useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true)
+      const getCharactersData = await ApiRequest(`character/${selectedID}`)
+          .then((response) => {
+            if(response.status === 200){
+              setCharacter(response.data)
+             setIsLoading(false)
+             
+            }
+          })
+    }
+    // if(selectedID) 
+    fetchData()
+   }, [selectedID])
+   console.log(character)
   return (
     <>
-      {name ? (
+      {!selectedID ? (
+        <Alert variant="outlined" severity="info" className="text-white">
+        Please select a character
+      </Alert>
+      ) : (
         <>
+        {
+          isLoading ? <CharacterLoading /> :
+          <>
           <div className="w-full flex flex-col items-center text-white bg-gray-800 border border-gray-600 rounded-lg shadow md:flex-row mb-8">
             <img
               className="object-cover w-full rounded-t-lg h-full md:h-auto md:w-72 md:rounded-none md:rounded-s-lg"
-              src={image}
+              src={character.image}
               alt=""
             />
             <div className="flex flex-col justify-between gap-3 p-4 leading-normal">
               <div className="flex text-orange-500 font-bold my-2">
                 <p className="text-sky-500">
-                  {gender === "Male" ? (
+                  {character.gender === "Male" ? (
                     <Man2Outlined className="size-5" />
                   ) : (
                     <WomanOutlined className="size-5" />
                   )}{" "}
                 </p>
                 <h2 className="mb-2 text-2xl font-bold tracking-tight text-orange-500 dark:text-white">
-                  {name}
+                  {character.name}
                 </h2>
               </div>
               <div className="flex items-center gap-1 text-sm text-white">
                 <p>
-                  {status === "Alive" ? (
+                  {character.status === "Alive" ? (
                     <span className="block size-2 bg-emerald-500 rounded-full"></span>
-                  ) : status === "unknown" ? (
+                  ) : character.status === "unknown" ? (
                     <span className="block size-2 bg-white rounded-full"></span>
                   ) : (
                     <span className="block size-2 bg-rose-500 rounded-full"></span>
@@ -40,11 +65,11 @@ const CharacterDetail = (props) => {
                 </p>
                 <p>
                   {" "}
-                  {status} - {species}
+                  {character.status} - {character.species}
                 </p>
               </div>
               <p className="text-gray-500">Last known Location</p>
-              {location && location.name}
+              {/* {character.location.name} */}
               <button className="bg-gray-600 rounded-full px-2 py-3 max-w-40 my-2">
                 Add To Favorite
               </button>
@@ -71,11 +96,9 @@ const CharacterDetail = (props) => {
               </li>
             </ul>
           </div>
-        </>
-      ) : (
-        <Alert variant="outlined" severity="info" className="text-white">
-          Please select a character
-        </Alert>
+                  </>
+          }
+          </>
       )}
     </>
   );
