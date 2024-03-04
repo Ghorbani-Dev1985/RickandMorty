@@ -37,7 +37,7 @@ const Index = () => {
     <>
     <Header characters={characters}/>
     <section className='container'>
-        <div className='border border-gray-600 rounded-xl min-h-screen'>
+        <section className='border border-gray-600 rounded-xl min-h-screen'>
    <h1 className='text-center my-8 text-7xl font-MorabbaBold tracking-widest'>The Rick and Morty</h1>
    <Divider className='border-gray-600 max-w-sm mx-auto'/>
    <div className='grid grid-cols-12 gap-5 my-8 px-3'>
@@ -48,7 +48,7 @@ const Index = () => {
          <CharacterDetail characterDetails={characterDetails} characterEpisodes={characterEpisodes}/>
         </div>
    </div>
-   </div>
+   </section>
    </section>
     </>
   )
