@@ -7,7 +7,7 @@ const CharacterList = ({ShowDetailsHandler , characters}) => {
 
   return (
 
-<div className="grid mb-8 border border-gray-600 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 lg:grid-cols-2">
+<div className={`${characters.length && "border border-gray-600"} grid mb-8  rounded-lg shadow-sm dark:border-gray-700 md:mb-12 lg:grid-cols-2`}>
     {
         characters.map(({id ,name , image , gender , status , species , url})=> {
             return(

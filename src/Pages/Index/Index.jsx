@@ -11,6 +11,7 @@ const Index = () => {
     const [characters , setCharacters] = useState([])
     const [characterDetails , setCharacterDetails] = useState([])
     const [characterEpisodes , setCharacterEpisodes] = useState([])
+    const [query , setQuery] = useState("")
     const [isLoading , setIsLoading] = useState(false)
     const ShowDetailsHandler = (id) => {
         const fetchCharacterDetails = ApiRequest(`character/${id}`)
@@ -27,22 +28,26 @@ const Index = () => {
     useEffect(() => {
       async function getCharacters (){
         setIsLoading(true)
-        const fetchCharacter = await ApiRequest('character')
+        const fetchCharacter = await ApiRequest(`character/?name=${query}`)
         .then((response) => {
           if(response.status === 200){
               setCharacters(response.data.results)
               setIsLoading(false)
-          }else{
-              toast.error("Error- Fetch Datas")
           }
         })
+        .catch((error) =>{
+         if(error.response.status === 404){
+          setCharacters([])
+          setIsLoading(false)
+         }
+        })
       }
+
       getCharacters()
-    }, [])
-    console.log(isLoading)
+    }, [query])
   return (
     <>
-    <Header characters={characters}/>
+    <Header characters={characters} query={query} setQuery={setQuery}/>
     <section className='container'>
         <section className='border border-gray-600 rounded-xl min-h-screen'>
    <h1 className='text-center my-8 text-7xl font-MorabbaBold tracking-widest'>The Rick and Morty</h1>

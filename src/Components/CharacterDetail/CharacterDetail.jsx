@@ -5,7 +5,6 @@ import React from "react";
 const CharacterDetail = (props) => {
   const { image, name, gender, status, species, location } =
     props.characterDetails;
-  console.log(props.characterDetails.length);
   return (
     <>
       {name ? (
