@@ -1,84 +1,57 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import ApiRequest from '../../Services/Axios/Config'
+import toast from 'react-hot-toast'
+import { Man2Outlined, WomanOutlined } from '@mui/icons-material'
 
 const CharacterList = () => {
+    const [characters , setCharacters] = useState([])
+    useEffect(() => {
+      const fetchCharacter = ApiRequest('character')
+      .then((response) => {
+        if(response.status === 200){
+            setCharacters(response.data.results)
+        }else{
+            toast.error("Error- Fetch Datas")
+        }
+      })
+    }, [])
+    console.log(characters)
   return (
 
 <div className="grid mb-8 border border-gray-600 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2">
-    <figure className="flex flex-col items-center justify-center p-8 text-center bg-gray-800 border-b border-gray-600 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-        <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-orange-500">Very easy this was to integrate</h3>
-            <p className="my-4">If you care for your time, I hands down would go with this."</p>
-        </blockquote>
-        <figcaption className="flex items-center justify-center ">
-            <img className="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png" alt="profile picture" />
-            <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-                <div>Bonnie Green</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400 ">Developer at Open AI</div>
+    {
+        characters.map(({id ,name , image , gender , status , species , url})=> {
+            return(
+                <React.Fragment key={id}>
+    <div className="flex flex-col items-center justify-center p-4 text-center bg-gray-800 border-b border-gray-600 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full flex items-center gap-2">
+            <img className="rounded-full w-9 h-9" src={image} alt="profile picture" />
+            <div className="flex flex-col space-y-4 font-medium dark:text-white text-left">
+                <div className='flex gap-3 text-orange-500 font-bold'>
+                    <p className='text-sky-500 size-3'>
+                    { gender === "Male" ? <Man2Outlined /> : <WomanOutlined />} </p>
+                    <p>{name}</p>
+                    </div>
+                <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 ">
+                    <p>
+                        {status === "Alive" ? <span className='block size-2 bg-emerald-500 rounded-full'></span> :  status === "unknown" ? <span className='block size-2 bg-white rounded-full'></span> : <span className='block size-2 bg-rose-500 rounded-full'></span>}
+                    </p>
+                    <p> {status} - {species}</p>
+                   
+                    </div>
             </div>
-        </figcaption>    
-    </figure>
-    <figure className="flex flex-col items-center justify-center p-8 text-center bg-gray-800 border-b border-gray-600 md:rounded-se-lg dark:bg-gray-800 dark:border-gray-700">
-        <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-orange-500">Solid foundation for any project</h3>
-            <p className="my-4">Designing with Figma components that can be easily translated to the utility classes of Tailwind CSS is a huge timesaver!"</p>
-        </blockquote>
-        <figcaption className="flex items-center justify-center ">
-            <img className="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png" alt="profile picture" />
-            <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-                <div>Roberta Casas</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">Lead designer at Dropbox</div>
-            </div>
-        </figcaption>    
-    </figure>
-    <figure className="flex flex-col items-center justify-center p-8 text-center bg-gray-800 border-b border-gray-600 md:rounded-es-lg md:border-b-0 md:border-e dark:bg-gray-800 dark:border-gray-700">
-        <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-orange-500">Mindblowing workflow</h3>
-            <p className="my-4">Aesthetically, the well designed components are beautiful and will undoubtedly level up your next application."</p>
-        </blockquote>
-        <figcaption className="flex items-center justify-center ">
-            <img className="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="profile picture" />
-            <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-                <div>Jese Leos</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">Software Engineer at Facebook</div>
-            </div>
-        </figcaption>    
-    </figure>
-    <figure className="flex flex-col items-center justify-center p-8 text-center bg-gray-800 border-gray-600 rounded-b-lg md:rounded-se-lg dark:bg-gray-800 dark:border-gray-700">
-        <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-orange-500">Efficient Collaborating</h3>
-            <p className="my-4">You have many examples that can be used to create a fast prototype for your team."</p>
-        </blockquote>
-        <figcaption className="flex items-center justify-center ">
-            <img className="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png" alt="profile picture" />
-            <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-                <div>Joseph McFall</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">CTO at Google</div>
-            </div>
-        </figcaption>    
-    </figure>
+        </div>    
+    </div>
+
+                </React.Fragment>
+            )
+        })
+    }
+
+
 </div>
 
   )
 }
 
 export default CharacterList
-
-const Character = () => {
-    return(
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-gray-800 border-b border-gray-600 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-        <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-orange-500">Very easy this was to integrate</h3>
-            <p className="my-4">If you care for your time, I hands down would go with this."</p>
-        </blockquote>
-        <figcaption className="flex items-center justify-center ">
-            <img className="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png" alt="profile picture" />
-            <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-                <div>Bonnie Green</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400 ">Developer at Open AI</div>
-            </div>
-        </figcaption>    
-    </figure>
-    )
-}
-
-export {Character}
