@@ -7,14 +7,22 @@ import CharacterLoading from "../Loading/CharacterLoading";
 const CharacterDetail = ({selectedID}) => {
    const [character , setCharacter] = useState(null)
    const [isLoading , setIsLoading] = useState(false)
+   const [episodes , setEpisodes] = useState([])
    useEffect(() => {
     async function fetchData() {
       setIsLoading(true)
-      const getCharactersData = await ApiRequest(`characters/${selectedID}`)
+      const getCharactersData = await ApiRequest(`character/${selectedID}`)
           .then((response) => {
             if(response.status === 200){
               setCharacter(response.data)
-             setIsLoading(false)
+              const episodeID = response.data.episode.map(episode => episode.split("/").at(-1))
+              const getEpisodeData = ApiRequest(`episode/${episodeID}`)
+              .then((response) => {
+                if(response.status === 200){
+                 setEpisodes([response.data].flat())
+                }
+              })
+              setIsLoading(false)
              
             }
           })
@@ -22,7 +30,7 @@ const CharacterDetail = ({selectedID}) => {
     // if(selectedID) 
     fetchData()
    }, [selectedID])
-   console.log(character)
+   console.log(episodes)
   return (
     <>
       {!selectedID ? (
@@ -76,25 +84,39 @@ const CharacterDetail = ({selectedID}) => {
             </div>
           </div>
           {/* Character Episode */}
-          <div className="w-full p-4 bg-gray-800 border border-gray-700 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
+          <div className="w-full p-4 bg-gray-800 border border-gray-700 rounded-lg h-[48.5rem] min-h-[48.5rem] overflow-y-scroll shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
             <h5 className="mb-3 text-base font-semibold md:text-xl dark:text-white">
-              Character Episode
+              List Of Episodes:
             </h5>
-            <ul className="my-4 space-y-3">
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center p-3 text-base font-bold rounded-lg bg-slate-700 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
-                >
-                  <span className="flex-1 ms-3 whitespace-nowrap">
-                    MetaMask
-                  </span>
-                  <span className="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
-                    Popular
-                  </span>
-                </a>
-              </li>
-            </ul>
+            {
+              episodes.length ? (
+                episodes.map(({id,air_date, episode, name }) => {
+                  return(
+                    <React.Fragment key={id}>
+              
+                <ul className="my-4 space-y-3">
+                  <li>
+                    <a
+                      href="#"
+                      className="flex items-center p-3 text-base font-bold rounded-lg bg-slate-700 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+                    >
+                      <span className="flex-1 ms-3 whitespace-nowrap">
+                      <span className="text-gray-400 font-sans">{String(id).padStart(2, "0")}-{episode}</span>: <span className="text-orange-500 font-bold">{name}</span>
+                      </span>
+                      <span className="inline-flex font-sans items-center justify-center px-2 py-1 ms-3 text-xs font-medium text-white bg-gray-500 rounded dark:bg-gray-700 dark:text-gray-400">
+                        {air_date}
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                    </React.Fragment>
+                  )
+                })
+              )
+               :  <Alert variant="outlined" severity="info" className="text-white">
+              Episode Not Available
+            </Alert>
+         }
           </div>
                   </>
           }
