@@ -49,7 +49,7 @@ const Index = () => {
     }, [query])
   return (
     <>
-    <Header characters={characters} query={query} setQuery={setQuery} numOfFavorites={favorites.length}/>
+    <Header characters={characters} query={query} setQuery={setQuery} favorites={favorites}/>
     <section className='container'>
         <section className='border border-gray-600 rounded-xl min-h-screen'>
    <h1 className='text-center my-8 text-7xl font-MorabbaBold tracking-widest'>The Rick and Morty</h1>
