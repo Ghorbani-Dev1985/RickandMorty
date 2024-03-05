@@ -10,7 +10,7 @@ const CharacterDetail = ({selectedID}) => {
    useEffect(() => {
     async function fetchData() {
       setIsLoading(true)
-      const getCharactersData = await ApiRequest(`character/${selectedID}`)
+      const getCharactersData = await ApiRequest(`characters/${selectedID}`)
           .then((response) => {
             if(response.status === 200){
               setCharacter(response.data)
