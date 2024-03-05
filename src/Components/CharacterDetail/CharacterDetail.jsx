@@ -1,13 +1,20 @@
-import { Man2Outlined, WomanOutlined } from "@mui/icons-material";
+import { Man2Outlined, SwapVert, Verified, WomanOutlined } from "@mui/icons-material";
 import { Alert } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ApiRequest from "../../Services/Axios/Config";
 import CharacterLoading from "../Loading/CharacterLoading";
 
-const CharacterDetail = ({selectedID}) => {
+const CharacterDetail = ({selectedID , AddToFavoriteHandler , isAddToFavorite}) => {
    const [character , setCharacter] = useState(null)
    const [isLoading , setIsLoading] = useState(false)
    const [episodes , setEpisodes] = useState([])
+   const [sortBy , setSortBy] = useState(true)
+   let sortedEpisodes;
+   if(sortBy){
+    sortedEpisodes = [...episodes].sort((a , b) => new Date(a.created) - new Date(b.created))
+   }else{
+    sortedEpisodes = [...episodes].sort((a , b) => new Date(b.created) - new Date(a.created))
+   }
    useEffect(() => {
     async function fetchData() {
       setIsLoading(true)
@@ -30,7 +37,6 @@ const CharacterDetail = ({selectedID}) => {
     // if(selectedID) 
     fetchData()
    }, [selectedID])
-   console.log(episodes)
   return (
     <>
       {!selectedID ? (
@@ -77,20 +83,28 @@ const CharacterDetail = ({selectedID}) => {
                 </p>
               </div>
               <p className="text-gray-500">Last known Location</p>
-              {/* {character.location.name} */}
-              <button className="bg-gray-600 rounded-full px-2 py-3 max-w-40 my-2">
+              {character.location.name}
+              {
+                isAddToFavorite ? <p className="flex-centre"><Verified className="text-emerald-500"/> <span>Already Added To Favorites</span></p> : <button onClick={() => AddToFavoriteHandler(character)} className="bg-gray-600 rounded-full px-2 py-3 max-w-40 my-2">
                 Add To Favorite
               </button>
+              }
+             
             </div>
           </div>
           {/* Character Episode */}
           <div className="w-full p-4 bg-gray-800 border border-gray-700 rounded-lg h-[48.5rem] min-h-[48.5rem] overflow-y-scroll shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
+            <div className="flex-between">
             <h5 className="mb-3 text-base font-semibold md:text-xl dark:text-white">
               List Of Episodes:
             </h5>
+            <button onClick={() => setSortBy(is => !is)}>
+              <SwapVert className={`${sortBy ? "opacity-50" : "opacity-100"}`}/>
+            </button>
+            </div>
             {
-              episodes.length ? (
-                episodes.map(({id,air_date, episode, name }) => {
+              sortedEpisodes.length ? (
+                sortedEpisodes.map(({id,air_date, episode, name }) => {
                   return(
                     <React.Fragment key={id}>
               

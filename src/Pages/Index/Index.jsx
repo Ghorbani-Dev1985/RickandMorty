@@ -13,13 +13,21 @@ const Index = () => {
     const [characterEpisodes , setCharacterEpisodes] = useState([])
     const [query , setQuery] = useState("")
     const [isLoading , setIsLoading] = useState(false)
+    const [favorites , setFavorites] = useState([])
     const SelectedIDHandler = (id) => {
       setSelectedID(prevID => prevID === id ? null : id)
     } 
+    const AddToFavoriteHandler = (char) => {
+        setFavorites((prevFav) => [...prevFav , char])
+
+    }
+    const isAddToFavorite = favorites.map((fav) => fav.id).includes(selectedID)
     useEffect(() => {
+      const controller = new AbortController()
+      const signal = controller.signal
       async function getCharacters (){
         setIsLoading(true)
-        const fetchCharacter = await ApiRequest(`character/?name=${query}`)
+        const fetchCharacter = await ApiRequest(`character/?name=${query}` , {signal})
         .then((response) => {
           if(response.status === 200){
               setCharacters(response.data.results)
@@ -35,10 +43,13 @@ const Index = () => {
       }
 
       getCharacters()
+      return () => {
+        controller.abort()
+      }
     }, [query])
   return (
     <>
-    <Header characters={characters} query={query} setQuery={setQuery}/>
+    <Header characters={characters} query={query} setQuery={setQuery} numOfFavorites={favorites.length}/>
     <section className='container'>
         <section className='border border-gray-600 rounded-xl min-h-screen'>
    <h1 className='text-center my-8 text-7xl font-MorabbaBold tracking-widest'>The Rick and Morty</h1>
@@ -52,7 +63,7 @@ const Index = () => {
 
         </div>
         <div className='col-span-12 lg:col-span-7 order-1 lg:order-2'>
-         <CharacterDetail selectedID={selectedID} characterEpisodes={characterEpisodes}/>
+         <CharacterDetail selectedID={selectedID} characterEpisodes={characterEpisodes} AddToFavoriteHandler={AddToFavoriteHandler} isAddToFavorite={isAddToFavorite}/>
         </div>
    </div>
    </section>

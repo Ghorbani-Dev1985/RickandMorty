@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import Logo from '../../assets/Images/Logo/logo.png'
 import { FavoriteBorderOutlined } from '@mui/icons-material'
 
-const Header = ({characters , query , setQuery}) => {
-  
+const Header = ({characters , query , setQuery , numOfFavorites}) => {
+
   return (
     <header>
         <div className='container'>
@@ -17,7 +17,7 @@ const Header = ({characters , query , setQuery}) => {
          </div>
               <div className='flex-centre relative'>
                 <FavoriteBorderOutlined className='text-rose-500 size-9'/>
-                <span className='bg-rose-500 text-white size-6 pt-2 flex-center rounded-full absolute -top-2 -right-1'>2</span>
+                <span className='bg-rose-500 text-white size-6 pt-2 flex-center rounded-full absolute -top-2 -right-1'>{numOfFavorites}</span>
               </div>
             </div>
         </div>
