@@ -10,7 +10,7 @@ const DetailModal = ({children , title , open , setOpen}) => {
     aria-labelledby="modal-modal-title"
     aria-describedby="modal-modal-description"
   >
-    <div className="absolute top-1/2 left-0 right-0 outline-none bg-gray-800 rounded-lg mx-auto -transform-x-1/2 -transform-y-1/2 w-60p border border-gray-600 shadow-ring">
+    <div className="absolute top-1/2 left-1/2 outline-none bg-gray-800 rounded-lg -translate-x-1/2 -translate-y-1/2 w-96 border border-gray-600 shadow-ring">
         <div className='flex-center border-b border-slate-600 p-2'>
               <p className='flex flex-1 justify-center font-DanaBold text-xl'>{title}</p>
               <button onClick={() => setOpen(false)}>
