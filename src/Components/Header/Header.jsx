@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import Logo from '../../assets/Images/Logo/logo.png'
 import { FavoriteBorderOutlined } from '@mui/icons-material'
+import DetailModal from '../DetailModal/DetailModal'
 
 const Header = ({characters , query , setQuery , numOfFavorites}) => {
 
@@ -21,6 +22,7 @@ const Header = ({characters , query , setQuery , numOfFavorites}) => {
               </div>
             </div>
         </div>
+        <DetailModal open={true} setOpen={true}>dsds</DetailModal>
     </header>
   )
 }
