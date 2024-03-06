@@ -21,6 +21,9 @@ const Index = () => {
         setFavorites((prevFav) => [...prevFav , char])
 
     }
+    const RemoveFavoriteHandler = (id) => {
+    setFavorites((prevFav) => prevFav.filter(fav => fav.id !== id))
+    }
     const isAddToFavorite = favorites.map((fav) => fav.id).includes(selectedID)
     useEffect(() => {
       const controller = new AbortController()
@@ -49,7 +52,7 @@ const Index = () => {
     }, [query])
   return (
     <>
-    <Header characters={characters} query={query} setQuery={setQuery} favorites={favorites}/>
+    <Header characters={characters} query={query} setQuery={setQuery} favorites={favorites} RemoveFavoriteHandler={RemoveFavoriteHandler}/>
     <section className='container'>
         <section className='border border-gray-600 rounded-xl min-h-screen'>
    <h1 className='text-center my-8 text-7xl font-MorabbaBold tracking-widest'>The Rick and Morty</h1>
