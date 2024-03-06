@@ -13,7 +13,7 @@ const Index = () => {
     const [characterEpisodes , setCharacterEpisodes] = useState([])
     const [query , setQuery] = useState("")
     const [isLoading , setIsLoading] = useState(false)
-    const [favorites , setFavorites] = useState([])
+    const [favorites , setFavorites] = useState(() => JSON.parse(localStorage.getItem("RICK_FAVORITE_ITEM")) || [])
     const SelectedIDHandler = (id) => {
       setSelectedID(prevID => prevID === id ? null : id)
     } 
@@ -24,6 +24,9 @@ const Index = () => {
     const RemoveFavoriteHandler = (id) => {
     setFavorites((prevFav) => prevFav.filter(fav => fav.id !== id))
     }
+    useEffect(()=> {
+     localStorage.setItem("RICK_FAVORITE_ITEM" , JSON.stringify(favorites))
+    }, [favorites])
     const isAddToFavorite = favorites.map((fav) => fav.id).includes(selectedID)
     useEffect(() => {
       const controller = new AbortController()
