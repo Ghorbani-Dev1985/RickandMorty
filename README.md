@@ -7,8 +7,8 @@
 
 # Screen Shot
 
-<img  src="./src/assets/Images/ScreenShot/RickandMorty1.png" width="100" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/RickandMorty2.png" width="100" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/RickandMorty1.png" width="100%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/RickandMorty2.png" width="100%" alt="ghorbani-dev.ir"/>
 
 
 ---
@@ -36,5 +36,7 @@ Develop with ReactJS, Tailwindcss, Mui
  <a href="rickandmorty.ghorbani-dev.ir" target="_black">
 rickandmorty.ghorbani-dev.ir
 </a>
+
+---
 
 Made with :heart: by Ghorbani-Dev1985
