@@ -33,8 +33,7 @@ Develop with ReactJS, Tailwindcss, Mui
 
 # APP Link
 
-[rickmorty.ghorbani-dev.ir](https://rickmorty.ghorbani-dev.ir/){:target="_blank" rel="noopener"}
-
+[rickmorty.ghorbani-dev.ir](https://rickmorty.ghorbani-dev.ir/)
 
 ---
 
