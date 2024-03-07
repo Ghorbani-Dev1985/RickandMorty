@@ -33,7 +33,7 @@ Develop with ReactJS, Tailwindcss, Mui
 
 # APP Link
 
- <a href="rickandmorty.ghorbani-dev.ir" target="_black">
+ <a href="https://rickmorty.ghorbani-dev.ir/" target="_black">
 rickmorty.ghorbani-dev.ir
 </a>
 
