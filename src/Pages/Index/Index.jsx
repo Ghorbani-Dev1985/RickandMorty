@@ -6,13 +6,14 @@ import ApiRequest from '../../Services/Axios/Config'
 import toast from 'react-hot-toast'
 import Header from '../../Components/Header/Header'
 import CharactersLoading from '../../Components/Loading/CharactersLoading'
+import useCharacters from '../../Hooks/useCharacters'
 
 const Index = () => {
-    const [characters , setCharacters] = useState([])
-    const [selectedID , setSelectedID] = useState("")
-    const [characterEpisodes , setCharacterEpisodes] = useState([])
-    const [query , setQuery] = useState("")
-    const [isLoading , setIsLoading] = useState(false)
+  const [selectedID , setSelectedID] = useState("")
+  const [characterEpisodes , setCharacterEpisodes] = useState([])
+  const [query , setQuery] = useState("")
+  const {characters , isLoading} = useCharacters(query) 
+  console.log(characters , isLoading)
     const [favorites , setFavorites] = useState(() => JSON.parse(localStorage.getItem("RICK_FAVORITE_ITEM")) || [])
     const SelectedIDHandler = (id) => {
       setSelectedID(prevID => prevID === id ? null : id)
@@ -28,31 +29,8 @@ const Index = () => {
      localStorage.setItem("RICK_FAVORITE_ITEM" , JSON.stringify(favorites))
     }, [favorites])
     const isAddToFavorite = favorites.map((fav) => fav.id).includes(selectedID)
-    useEffect(() => {
-      const controller = new AbortController()
-      const signal = controller.signal
-      async function getCharacters (){
-        setIsLoading(true)
-        const fetchCharacter = await ApiRequest(`character/?name=${query}` , {signal})
-        .then((response) => {
-          if(response.status === 200){
-              setCharacters(response.data.results)
-              setIsLoading(false)
-          }
-        })
-        .catch((error) =>{
-         if(error.response.status === 404){
-          setCharacters([])
-          setIsLoading(false)
-         }
-        })
-      }
 
-      getCharacters()
-      return () => {
-        controller.abort()
-      }
-    }, [query])
+    
   return (
     <>
     <Header characters={characters} query={query} setQuery={setQuery} favorites={favorites} RemoveFavoriteHandler={RemoveFavoriteHandler}/>

@@ -23,6 +23,7 @@ Develop with ReactJS, Tailwindcss, Mui
 <li>You can search for characters</li>
 <li>Show character details</li>
 <li>Get and show character episodes</li>
+<li>You can sort episodes by date</li>
 <li>You can add characters to favorite list</li>
 <li>You can visit favorite list</li>
 <li>You can visit favorite list after refresh</li>
