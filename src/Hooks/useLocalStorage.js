@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react'
 
-const useLocalStorage = (itemName) => {
-    const [value , setValue] = useState(() => JSON.parse(localStorage.getItem(itemName)) || [])
+const useLocalStorage = (itemName , initialState) => {
+    const [value , setValue] = useState(() => JSON.parse(localStorage.getItem(itemName)) || initialState)
     useEffect(()=> {
         localStorage.setItem(itemName , JSON.stringify(value))
        }, [value])

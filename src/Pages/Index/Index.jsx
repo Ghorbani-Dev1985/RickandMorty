@@ -14,7 +14,7 @@ const Index = () => {
   const [characterEpisodes , setCharacterEpisodes] = useState([])
   const [query , setQuery] = useState("")
   const {characters , isLoading} = useCharacters(query) 
-   const [favorites , setFavorites] = useLocalStorage("RICK_FAVORITE_ITEM")
+   const [favorites , setFavorites] = useLocalStorage("RICK_FAVORITE_ITEM" , [])
     const SelectedIDHandler = (id) => {
       setSelectedID(prevID => prevID === id ? null : id)
     } 
@@ -33,7 +33,7 @@ const Index = () => {
     <Header characters={characters} query={query} setQuery={setQuery} favorites={favorites} RemoveFavoriteHandler={RemoveFavoriteHandler}/>
     <section className='container'>
         <section className='border border-gray-600 rounded-xl min-h-screen'>
-   <h1 className='text-center my-8 text-7xl font-MorabbaBold tracking-widest'>The Rick and Morty</h1>
+   <h1 className='text-center my-8 md:text-7xl font-MorabbaBold tracking-widest'>The Rick and Morty</h1>
    <Divider className='border-gray-600 max-w-sm mx-auto'/>
    <div className='grid grid-cols-12 gap-5 my-8 px-3'>
         <div className='col-span-12 lg:col-span-5 order-2 lg:order-1'>

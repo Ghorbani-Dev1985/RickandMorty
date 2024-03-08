@@ -19,9 +19,6 @@ ApiRequest.interceptors.request.use(
 
 ApiRequest.interceptors.response.use(
     (response => {
-       if((response.status === 200 || response.status === 201) && (response.data.length === 0)){
-        toast.success(" درخواست شما با موفقیت انجام شد")
-    }
         return response
     }),
     (error) => {
