@@ -7,14 +7,14 @@ import toast from 'react-hot-toast'
 import Header from '../../Components/Header/Header'
 import CharactersLoading from '../../Components/Loading/CharactersLoading'
 import useCharacters from '../../Hooks/useCharacters'
+import useLocalStorage from '../../Hooks/useLocalStorage'
 
 const Index = () => {
   const [selectedID , setSelectedID] = useState("")
   const [characterEpisodes , setCharacterEpisodes] = useState([])
   const [query , setQuery] = useState("")
   const {characters , isLoading} = useCharacters(query) 
-  console.log(characters , isLoading)
-    const [favorites , setFavorites] = useState(() => JSON.parse(localStorage.getItem("RICK_FAVORITE_ITEM")) || [])
+   const [favorites , setFavorites] = useLocalStorage("RICK_FAVORITE_ITEM")
     const SelectedIDHandler = (id) => {
       setSelectedID(prevID => prevID === id ? null : id)
     } 
@@ -25,9 +25,6 @@ const Index = () => {
     const RemoveFavoriteHandler = (id) => {
     setFavorites((prevFav) => prevFav.filter(fav => fav.id !== id))
     }
-    useEffect(()=> {
-     localStorage.setItem("RICK_FAVORITE_ITEM" , JSON.stringify(favorites))
-    }, [favorites])
     const isAddToFavorite = favorites.map((fav) => fav.id).includes(selectedID)
 
     
